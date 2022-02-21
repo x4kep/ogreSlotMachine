@@ -1,0 +1,177 @@
+/* Global */
+* {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Redressed', cursive;
+  color: white;
+  background: #de6161; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #de6161, #2657eb); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+input[type='text'] { font-size: 30px; }
+input[type='text']:disabled{ 
+  color: white; 
+}
+
+#slot__container {
+  width: 50%;
+  height: 600px;
+  position: relative;
+  border-radius: 15px;
+  border: 5px solid white;
+  margin: 0 auto;
+  
+  background-image: url(./media/images/ogre.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.slot__skin {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.4;
+  position: absolute;
+  z-index: 0;
+}
+
+.slot__controls {
+  min-width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding: 10px;
+  z-index: 1;
+}
+
+.slot__controls label{
+  font-size: 26px;
+}
+
+.slot__controls input {
+  height: 50px;
+  width: 50px;
+  border: 2px solid white;
+  border-radius: 10px;
+  text-align: center;
+  font: 20px;
+}
+
+#js-total {
+  width: 100px;
+}
+
+.slot__actions {
+  padding: 10px;
+}
+
+.slot__other {
+  padding: 10px;
+}
+
+.slot__other label {
+  padding: 0 10px;
+  line-height: 2;
+}
+
+#slot__result {
+  width: 200px;
+  height: 100px;
+  position: relative;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 2;
+  top: 200px;
+  background-color: #2a57e7;
+}
+
+#result {
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 64px;
+}
+
+/* Buttons 
+  Ref: https://codepen.io/davidicus/pen/emgQKJ 
+*/
+.btn {
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size:16px;
+  font-weight: 400;
+  line-height: 45px;
+  margin: 6px 0px 6px 6px;
+  max-width: 160px; 
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+  border: 1px dotted rgb(255, 255, 255);;
+}
+
+.btn-5 {
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+  outline: 1px solid rgb(255, 255, 255);;
+  outline-color: rgba(255, 255, 255, .5);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+} 
+
+.btn-5:hover {
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388; 
+}
+
+/* Media querys 
+______________________*/
+
+/* MD devices (mobile, 768px and up) */
+@media (min-width: 320px) { 
+  #slot__container {
+    width: 100%;
+  }
+}
+
+/* MD devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+  #slot__container {
+    width: 100%;
+  }
+}
+
+/* LG devices (desktops, 1024px and up) */
+@media (min-width: 1024px) { 
+  #slot__container {
+    width: 100%;
+  }
+}
+
+/* XL devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+  #slot__container {
+    width: 75%;
+  }
+}
+
+/* XXL devices (large desktops, 1500px and up) */
+@media (min-width: 1500px) { 
+  #slot__container {
+    width: 50%;
+  }
+}
