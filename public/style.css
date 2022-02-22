@@ -5,15 +5,47 @@
 
 body {
   font-family: 'Redressed', cursive;
+  font-size: 62.5%;
   color: white;
   background: #de6161; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #de6161, #2657eb); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.body--horizontalBg {
+  background-size: 400% 400%;
+  animation: horizontalBg 5s ease infinite;
+}
+
 input[type='text'] { font-size: 30px; }
 input[type='text']:disabled{ 
   color: white; 
+}
+
+.js-playMusic, .js-betOne,  .js-betMax, .js-spin, .js-autoSpin {
+  background-repeat: no-repeat;
+  background-position: 122px center;
+  background-size: 30px;
+}
+
+.js-playMusic {
+  background-image: url(./media/icons/play.png);
+}
+
+.js-betOne {
+  background-image: url(./media/icons/one_bet.png);
+}
+
+.js-betMax {
+  background-image: url(./media/icons/max_bet.png);
+}
+
+.js-spin {
+  background-image: url(./media/icons/single_bet.png);
+}
+
+.js-autoSpin {
+  background-image: url(./media/icons/auto_bet.png);
 }
 
 #slot__container {
@@ -28,20 +60,23 @@ input[type='text']:disabled{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
 .slot__skin {
+  position: absolute;
   width: 100%;
   height: 100%;
   background-color: rgb(0, 0, 0);
+  border-radius: 10px;
   opacity: 0.4;
-  position: absolute;
   z-index: 0;
 }
 
 .slot__controls {
-  min-width: 100%;
   position: absolute;
+  min-width: 100%;
   bottom: 0;
   padding: 10px;
   z-index: 1;
@@ -78,8 +113,8 @@ input[type='text']:disabled{
 }
 
 #slot__result {
-  width: 200px;
-  height: 100px;
+  width: 33%;
+  height: 150px;
   position: relative;
   color: white;
   border: 2px solid white;
@@ -87,8 +122,10 @@ input[type='text']:disabled{
   margin: 0 auto;
   text-align: center;
   line-height: 2;
-  top: 200px;
-  background-color: #2a57e7;
+  top: 150px;
+  background-color: #9b867c;
+  opacity: 0.8;
+  font-size: 32px;
 }
 
 #result {
@@ -174,4 +211,17 @@ ______________________*/
   #slot__container {
     width: 50%;
   }
+}
+
+/* Animations */
+@keyframes horizontalBg {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

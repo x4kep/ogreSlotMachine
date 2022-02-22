@@ -1,5 +1,19 @@
+
+/**
+ * @author Dusan Veselinovic <dusan.veselinovic.dev@gmail.com>
+ * @description Fun project for slot machine */
+
+/**
+ * @enum {String} SlotSettings */
+ const Default = Object.freeze({
+  Credit: 1000,
+  Reels: 3,
+  Symbols: 12
+});
+
+
 class OgreSlotMachine{
-  constructor(credit = 1000, reels = 3, symbols = 12){
+  constructor(credit = Default.Credit, reels = Default.Reels, symbols = Default.Symbols){
       this.credit = credit;
       this.reels = reels;
       this.symbols = symbols;
@@ -25,33 +39,41 @@ class OgreSlotMachine{
   }
 
   spin() {
-      let resDisplay = "";
-      let res = [];
-      let randomNum;
+      let resultCombination = [];
       let symbolCounts = {};
-      let value = 0;
+      let resDisplay = "";
+      let winSum = 0;
+      let self = this;
 
-      this.reelsBucket.forEach(element => {
-        randomNum = element[this.random()];
-        resDisplay += "|" + randomNum + "|";
-        res.push(randomNum);
-      });
-
-      // Create new object, with count of each symbol {'1':2, '2':1}
-      res.forEach((x) => symbolCounts[x] = (symbolCounts[x] || 0) + 1);
-      // symbolCounts = {'0': 2};
-
-      // Calculation bet outcome
-      for(const symbol in symbolCounts){
-        if(symbolCounts[symbol] >= 2) {
-          value += this.betValue * Math.floor(Math.pow(2, symbolCounts[symbol]-1) * ( (Number(symbol) / 10) + 1 ));
-        }
+      function resultReels(reelsBucket, self){
+        let randomNum;
+        reelsBucket.forEach(element => {
+          randomNum = element[self.random()];
+          resultCombination.push(randomNum);
+        });
       }
 
+      function countReels(resultCombination) {
+        resultCombination.forEach((reel) => symbolCounts[reel] = (symbolCounts[reel] || 0) + 1);
+        return symbolCounts;
+      }
+
+      function displayReels(resultCombination) {
+        resultCombination.forEach((reel) => resDisplay += `|${reel}|`);
+      }
+
+      function winCalculator(symbolCounts, self){
+        for(const symbol in symbolCounts){
+          if(symbolCounts[symbol] >= 2) {
+            return self.betValue * Math.floor(Math.pow(2, symbolCounts[symbol]-1) * ( (Number(symbol) / 10) + 1 ));
+          }
+        }
+      }
       
-      resDisplay += 'val:' + value;
-     
-      this.calCredit(value);
+      resultReels(this.reelsBucket, self);
+      displayReels(resultCombination);
+      winSum = winCalculator(countReels(resultCombination), self);
+      this.calCredit(winSum);
       this.draw(resDisplay);
   }
 
@@ -83,7 +105,7 @@ class OgreSlotMachine{
       // Display how much user earned
       paid.value = value;
     } else {
-      console.log('LOSE' + value);
+      console.log('LOSE');
       note.style.borderColor = '#ee6052';
       audio = new Audio('./media/sounds/spin.mp3');
       audio.volume = 0.1;
@@ -97,9 +119,18 @@ class OgreSlotMachine{
   }
 
   playMusic() {
-    let audio = new Audio('./media/sounds/DJMasif_SlotMachine.mp3');
+    let body = document.getElementsByTagName('body')[0];
+    var audio = document.getElementById("music");
     audio.volume = 0.4;
-    audio.play();
+    
+    if(audio.paused) {
+      audio.play(); 
+      body.classList.add("body--horizontalBg");
+    }else {
+      audio.pause();
+      body.classList.remove("body--horizontalBg");
+    }
+    
   }
   
 }
@@ -132,20 +163,21 @@ var osm = new OgreSlotMachine();
 
 
 // IDEAS
-// Buttons should hav e icons 
-// Button Playmusic animated icon -- Toggle
-// Button Autospin ( Spin infinite ) -- Toggle
-// Button Spin animate icon ( Spin once )
+// ()Buttons should have icons 
+// ()Button Playmusic animated icon -- Toggle
+// ()Button Autospin ( Spin infinite ) -- Toggle
+// ()Button Spin animate icon ( Spin once )
 
 // Oher
-// Private Variables
-// Generate symbols 
-// 0 Credit cant play ( paid with Prompt )
-// Animate slot machine
-// Array of images as symbols ( NFT + Elon mask ?:D )
+// ()Private Variables
+// ()Generate symbols 
+// ()0 Credit cant play ( paid with Prompt )
+// ()Animate slot machine
+// ()Array of images as symbols ( NFT + Elon mask ?:D )
+// ()Loading screen
 
 // CSS clean up
-// BEM naming all elements 
-// Reusable colors at top
-// Spacing variables
+// ()BEM naming all elements 
+// ()Reusable colors at top
+// ()Spacing variables
 // 
