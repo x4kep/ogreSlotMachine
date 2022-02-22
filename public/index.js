@@ -8,7 +8,9 @@
  const Default = Object.freeze({
   Credit: 1000,
   Reels: 3,
-  Symbols: 12
+  Symbols: 12,
+  MinBet: 1,
+  MaxBet: 20
 });
 
 
@@ -19,6 +21,7 @@ class OgreSlotMachine{
       this.symbols = symbols;
       this.reelsBucket = [];
       this.betValue = 1;
+      this.autoSpinInterval;
       this.populateReelsBuckets(reels);
   }
 
@@ -58,29 +61,38 @@ class OgreSlotMachine{
         return symbolCounts;
       }
 
-      function displayReels(resultCombination) {
-        resultCombination.forEach((reel) => resDisplay += `|${reel}|`);
-      }
-
-      function winCalculator(symbolCounts, self){
+      function winReels(symbolCounts, self){
         for(const symbol in symbolCounts){
           if(symbolCounts[symbol] >= 2) {
-            return self.betValue * Math.floor(Math.pow(2, symbolCounts[symbol]-1) * ( (Number(symbol) / 10) + 1 ));
+            return self.betValue * Math.floor(Math.pow(2, symbolCounts[symbol]) * ( (Number(symbol) / 10) + 1 ));
           }
         }
+      }
+
+      function displayReels(resultCombination) {
+        resultCombination.forEach((reel) => resDisplay += `|${reel}|`);
       }
       
       resultReels(this.reelsBucket, self);
       displayReels(resultCombination);
-      winSum = winCalculator(countReels(resultCombination), self);
+      winSum = winReels(countReels(resultCombination), self);
       this.calCredit(winSum);
       this.draw(resDisplay);
   }
 
-  autoSpin() {
-    setInterval(() => {
-      this.spin();
-    }, 2000)
+  autoSpin(e) {
+    let btn = e.target;
+    // TODO Closure ?
+    if(this.autoSpinInterval){
+      clearInterval(this.autoSpinInterval);
+      this.autoSpinInterval = undefined;
+      btn.classList.remove("btn--blinkBorder");
+    } else {
+      this.autoSpinInterval = setInterval(() => {
+        this.spin();
+      }, 2000)
+      btn.classList.add("btn--blinkBorder");
+    }
   }
 
   draw(resDisplay) {
@@ -118,17 +130,20 @@ class OgreSlotMachine{
     
   }
 
-  playMusic() {
+  playMusic(e) {
+    let btn = e.target;
     let body = document.getElementsByTagName('body')[0];
-    var audio = document.getElementById("music");
+    let audio = document.getElementById("music");
     audio.volume = 0.4;
     
     if(audio.paused) {
       audio.play(); 
       body.classList.add("body--horizontalBg");
+      btn.classList.add("js-playMusic--pause");
     }else {
       audio.pause();
       body.classList.remove("body--horizontalBg");
+      btn.classList.remove("js-playMusic--pause");
     }
     
   }
@@ -143,7 +158,7 @@ var osm = new OgreSlotMachine();
   let playMusic = document.getElementsByClassName('js-playMusic')[0];
   playMusic.addEventListener('click', (e) => { 
     e.preventDefault(); 
-    osm.playMusic();
+    osm.playMusic(e);
   });
 
   let spin = document.getElementsByClassName('js-spin')[0];
@@ -155,7 +170,7 @@ var osm = new OgreSlotMachine();
   let autoSpin = document.getElementsByClassName('js-autoSpin')[0];
   autoSpin.addEventListener('click', (e) => { 
     e.preventDefault(); 
-    osm.autoSpin();
+    osm.autoSpin(e);
   });
   
 })()

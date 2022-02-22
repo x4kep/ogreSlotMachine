@@ -32,6 +32,10 @@ input[type='text']:disabled{
   background-image: url(./media/icons/play.png);
 }
 
+.js-playMusic--pause {
+  background-image: url(./media/icons/pause.png);
+}
+
 .js-betOne {
   background-image: url(./media/icons/one_bet.png);
 }
@@ -112,6 +116,21 @@ input[type='text']:disabled{
   line-height: 2;
 }
 
+.slot__item {
+  margin: 10px 0;
+} 
+
+.slot__item > label {
+  min-width: 120px;
+  display: inline-block;
+  border-radius: 10px 0 0 10px;
+  position: relative;
+  left: 5px;
+  bottom: 2px;
+  background-color: #ffffff7d;
+  line-height: 2.2;
+}
+
 #slot__result {
   width: 33%;
   height: 150px;
@@ -155,10 +174,17 @@ input[type='text']:disabled{
   text-transform: uppercase;
   width: 100%;
   text-align: center;
-  border: 1px dotted rgb(255, 255, 255);;
+  border: 1px dotted rgb(255, 255, 255);
+  background-color: #5359c9;
+  border: 1px solid;
 }
 
-.btn-5 {
+.btn--blinkBorder {
+  animation: blinkBorder 1s;
+  animation-iteration-count: infinite;
+}
+
+.btn--borderFadeOut {
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
   outline: 1px solid rgb(255, 255, 255);;
   outline-color: rgba(255, 255, 255, .5);
@@ -167,7 +193,7 @@ input[type='text']:disabled{
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 } 
 
-.btn-5:hover {
+.btn--borderFadeOut:hover {
   border: 1px solid rgb(255, 255, 255);
   box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
   outline-color: rgba(255, 255, 255, 0);
@@ -183,6 +209,14 @@ ______________________*/
   #slot__container {
     width: 100%;
   }
+  #slot__result {
+    width: 90%;
+    top: 0;
+    margin-top: 10px;
+  }
+  .btn {
+    max-width: 90px;
+  }
 }
 
 /* MD devices (tablets, 768px and up) */
@@ -190,12 +224,23 @@ ______________________*/
   #slot__container {
     width: 100%;
   }
+  #slot__result {
+    width: 90%;
+    top: 0;
+    margin-top: 20px;
+  }
+  .btn {
+    max-width: 160px;
+  }
 }
 
 /* LG devices (desktops, 1024px and up) */
 @media (min-width: 1024px) { 
   #slot__container {
     width: 100%;
+  }
+  #slot__result {
+    width: 75%;
   }
 }
 
@@ -225,3 +270,5 @@ ______________________*/
 		background-position: 0% 50%;
 	}
 }
+
+@keyframes blinkBorder { 50% { border-color: #5359c9; }  }
