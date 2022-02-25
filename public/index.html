@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogre Slot Machine</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogre slot Machine">
+    <meta name="keywords" content="SolotMachine">
+    <meta name="author" content="Dusan Veselinovic">
     <link rel="icon" type="image/x-icon" href="media/icons/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <!-- FONTS -->
@@ -22,7 +23,7 @@
       <div class="slot__other">
         <div class="slot__item">
           <label for="bet">Bet</label>
-          <input type="text" id="js-bet" name="bet">
+          <input type="text" id="js-betValue" name="bet">
         </div>
         <div class="slot__item">
           <label for="bet">Winner paid</label>
@@ -44,13 +45,18 @@
       </div>
     </div>
 
-    <div id="slot__result"></div>
+    <div id="slot__result">
+      <div id="slot__reels">
+
+      </div>
+    </div>
 
   </div>
 
   <audio id="music" preload="auto">
     <source src="./media/sounds/DJMasif_SlotMachine.mp3" type="audio/mp3">
   </audio>
+  
 
 	<script src="index.js"></script>
   </body>

@@ -3,6 +3,17 @@
   box-sizing: inherit;
 }
 
+/* ===============  Variables =============== */
+:root {
+  --primary-color: red;
+  --secondary-color: green;
+  --accent-color: blue;
+
+  --border-radius-small: 3;
+  --border-radius-medium: 6;
+  --border-radius-big: 9;
+}
+
 body {
   font-family: 'Redressed', cursive;
   font-size: 62.5%;
@@ -10,6 +21,10 @@ body {
   background: #de6161; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #de6161, #2657eb); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 .body--horizontalBg {
@@ -94,7 +109,7 @@ input[type='text']:disabled{
   height: 50px;
   width: 50px;
   border: 2px solid white;
-  border-radius: 10px;
+  border-radius: 0 10px 10px 0;
   text-align: center;
   font: 20px;
 }
@@ -104,11 +119,11 @@ input[type='text']:disabled{
 }
 
 .slot__actions {
-  padding: 10px;
+  padding: 0 10px 10px 10px;
 }
 
 .slot__other {
-  padding: 10px;
+  padding: 10px 10px 0 10px;
 }
 
 .slot__other label {
@@ -133,7 +148,7 @@ input[type='text']:disabled{
 
 #slot__result {
   width: 33%;
-  height: 150px;
+  min-height: 130px;
   position: relative;
   color: white;
   border: 2px solid white;
@@ -272,3 +287,37 @@ ______________________*/
 }
 
 @keyframes blinkBorder { 50% { border-color: #5359c9; }  }
+
+#slot__reels > .slot__reel {
+  display: inline-block;
+  margin: 20px 2px;
+}
+
+.slot__reel {
+  margin: 0 auto;  
+}
+
+.reel__window {
+  height: 104px;
+  width: 104px;
+  overflow: hidden;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.reel__railway {
+  position: relative;
+}
+
+.reel__symbol {
+  width: 100px;
+  height: 100px;
+  background-color: #5359c9;
+  margin: 2px auto;
+  color: white;
+  text-align: right;
+  line-height: 9.2;
+  font-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
