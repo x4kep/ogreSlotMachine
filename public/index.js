@@ -1,3 +1,4 @@
+"use strict"
 
 /**
  * @author Dusan Veselinovic <dusan.veselinovic.dev@gmail.com>
@@ -145,8 +146,8 @@ class OgreSlotMachine{
    * @returns {number} Number is between min and max
    */
   random(min = 1, max = this.reelSymbols.length) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
+      var min = Math.ceil(min);
+      var max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
@@ -269,7 +270,7 @@ class OgreSlotMachine{
     let btn = e.target;
     let body = document.getElementsByTagName('body')[0];
     let audio = document.getElementById("slot__music");
-    audio.volume = Default.musicVol;
+    audio.volume = Default.musicVol || 1;
     
     // REF: Avoid if statments
     if(audio.paused) {
@@ -318,7 +319,7 @@ class OgreSlotMachine{
     blockContainer.classList.add("reel__window");
     blockRailway.classList.add("reel__railway");
   
-    for(var i = 0; i <= Default.NumberOfSymbolsInReel; i++){
+    for(let i = 0; i <= Default.NumberOfSymbolsInReel; i++){
       block = document.createElement("div");
       block.classList.add("reel__symbol");
       block.innerHTML = i;
@@ -342,9 +343,9 @@ class OgreSlotMachine{
     document.getElementById('slot__reels').appendChild(slotReel);
   
     // Animate
-    let container1 = document.getElementsByClassName("reel__symbol");
-    let blockMarginTop = parseInt(getComputedStyle(container1[0]).marginTop)
-    let blockRealHeight = container1[0].clientHeight + blockMarginTop;
+    let reelSymbol = document.getElementsByClassName("reel__symbol");
+    let blockMarginTop = parseInt(getComputedStyle(reelSymbol[0]).marginTop)
+    let blockRealHeight = reelSymbol[0].clientHeight + blockMarginTop;
     let blockTotalHeight = (Default.NumberOfSymbolsInReel * blockRealHeight + (blockRealHeight));
     let intervalSpinReels;
     blockRailway.style.top = -blockTotalHeight + 'px';
