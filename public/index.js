@@ -11,6 +11,7 @@
   NumberOfSymbolsInReel: 11, // MAX 19 extend reelSymbols if you want more
   MinBet: 1,
   MaxBet: 20,
+  MixMatchSymbolsWin: 2,
   musicVol: 0.4,
   gameVol: 0.1,
   autoSpinSpeed: 3000,
@@ -18,102 +19,102 @@
   reelsSpinRound: 2,
   reelSymbols: [
     {
-      orderNumber: 1,
-      worth: 1,
+      orderNumber: 0,
+      worth: 10,
       imageUrl: './media/reelsSymbols/elon_mask.png'
     },
     {
-      orderNumber: 2,
+      orderNumber: 1,
       worth: 1,
       imageUrl: './media/reelsSymbols/ape_nft_1.png'
     },
     {
-      orderNumber: 3,
+      orderNumber: 2,
       worth: 1,
       imageUrl: './media/reelsSymbols/ape_nft_2.png'
     },
     {
-      orderNumber: 4,
+      orderNumber: 3,
       worth: 1,
       imageUrl: './media/reelsSymbols/ape_nft_3.png'
     },
     {
-      orderNumber: 5,
+      orderNumber: 4,
       worth: 1,
       imageUrl: './media/reelsSymbols/ape_nft_4.png'
     },
     {
-      orderNumber: 6,
-      worth: 1,
+      orderNumber: 5,
+      worth: 2,
       imageUrl: './media/reelsSymbols/ape_nft_5.png'
     },
     {
-      orderNumber: 7,
-      worth: 1,
+      orderNumber: 6,
+      worth: 2,
       imageUrl: './media/reelsSymbols/ape_nft_6.png'
     },
     {
-      orderNumber: 8,
-      worth: 1,
+      orderNumber: 7,
+      worth: 2,
       imageUrl: './media/reelsSymbols/ape_nft_7.png'
     },
     {
-      orderNumber: 9,
-      worth: 1,
+      orderNumber: 8,
+      worth: 2,
       imageUrl: './media/reelsSymbols/ape_nft_8.png'
     },
     {
-      orderNumber: 10,
-      worth: 1,
+      orderNumber: 9,
+      worth: 3,
       imageUrl: './media/reelsSymbols/ape_nft_9.png'
     },
     {
-      orderNumber: 11,
-      worth: 2,
+      orderNumber: 10,
+      worth: 3,
       imageUrl: './media/reelsSymbols/ape_nft_10.png'
     },
     {
-      orderNumber: 12,
-      worth: 2,
+      orderNumber: 11,
+      worth: 3,
       imageUrl: './media/reelsSymbols/ape_nft_11.png'
     },
     {
-      orderNumber: 13,
-      worth: 2,
+      orderNumber: 12,
+      worth: 3,
       imageUrl: './media/reelsSymbols/ape_nft_12.png'
     },
     {
-      orderNumber: 14,
-      worth: 2,
+      orderNumber: 13,
+      worth: 4,
       imageUrl: './media/reelsSymbols/ape_nft_13.png'
     },
     {
-      orderNumber: 15,
+      orderNumber: 14,
       worth: 4,
       imageUrl: './media/reelsSymbols/ape_nft_14.png'
     },
     {
-      orderNumber: 16,
+      orderNumber: 15,
       worth: 4,
       imageUrl: './media/reelsSymbols/ape_nft_15.png'
     },
     {
-      orderNumber: 17,
+      orderNumber: 16,
       worth: 4,
       imageUrl: './media/reelsSymbols/ape_nft_16.png'
     },
     {
-      orderNumber: 18,
+      orderNumber: 17,
       worth: 5,
       imageUrl: './media/reelsSymbols/ape_nft_17.png'
     },
     {
-      orderNumber: 19,
+      orderNumber: 18,
       worth: 5,
       imageUrl: './media/reelsSymbols/ape_nft_18.png'
     },
     {
-      orderNumber: 20,
+      orderNumber: 19,
       worth: 5,
       imageUrl: './media/reelsSymbols/ape_nft_19.png'
     }
@@ -137,13 +138,24 @@ class OgreSlotMachine{
     }
   }
 
-  random(min = 0, max = 12) {
+  /**
+   * 
+   * @param {number} min 
+   * @param {max} max 
+   * @returns {number} Number is between min and max
+   */
+  random(min = 1, max = this.reelSymbols.length) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  spin(e) {
+   /**
+   * 
+   * @param { event } event onClick
+   * @returns { void } 
+   */
+  spin(event) {
       let resultCombination = [];
       let symbolCounts = {};
       let winSum = 0;
@@ -151,8 +163,8 @@ class OgreSlotMachine{
       let maxTimeout;
 
       if(document.getElementsByClassName('slot__reel').length){
-        let t = document.querySelectorAll('.slot__reel');
-        t.forEach( e => e.remove() );
+        let slotReel = document.querySelectorAll('.slot__reel');
+        slotReel.forEach( slotReel => slotReel.remove() );
       }
 
       function setBetValue(e, self) {
@@ -171,7 +183,7 @@ class OgreSlotMachine{
       function resultReels(reelsBucket, self){
         let randomNum;
         reelsBucket.forEach(element => {
-          randomNum = element[self.random()].orderNumber;
+          randomNum = element[self.random(0, Default.NumberOfSymbolsInReel)].orderNumber;
           resultCombination.push(randomNum);
         });
       }
@@ -183,8 +195,8 @@ class OgreSlotMachine{
 
       function winReels(symbolCounts, self){
         for(const symbol in symbolCounts){
-          if(symbolCounts[symbol] >= 2) {
-            return self.betValue * Math.floor(Math.pow(2, symbolCounts[symbol]) * ( (Number(symbol) / 10) + 1 ));
+          if(symbolCounts[symbol] >= Default.MixMatchSymbolsWin) {
+            return self.betValue * Math.floor(Math.pow(2, Default.reelSymbols[symbol].worth)) * (symbolCounts[symbol]);
           }
         }
       }
@@ -198,8 +210,7 @@ class OgreSlotMachine{
         });
       }
 
-      
-      setBetValue(e, self);
+      setBetValue(event, self);
       resultReels(this.reelsBucket, self);
       displayReels(resultCombination, self);
       winSum = winReels(countReels(resultCombination), self);
@@ -220,10 +231,6 @@ class OgreSlotMachine{
       btn.classList.add("btn--blinkBorder");
     }
 
-  }
-
-  draw(resDisplay) {
-    // document.getElementById('slot__result').innerHTML = resDisplay + " {" + this.credit + "}";
   }
 
   calculateCredit(value){
@@ -261,7 +268,7 @@ class OgreSlotMachine{
   playMusic(e) {
     let btn = e.target;
     let body = document.getElementsByTagName('body')[0];
-    let audio = document.getElementById("music");
+    let audio = document.getElementById("slot__music");
     audio.volume = Default.musicVol;
     
     // REF: Avoid if statments
@@ -281,7 +288,12 @@ class OgreSlotMachine{
     let betValue = Number(e.target.value);
     
     /**
-    * @ {String} SlotSettings */
+     * 
+     * @param {number} value 
+     * @param {number} min 
+     * @param {number} max 
+     * @returns {boolean} Return if value is between min and max
+    */
     function isInRange(value, min, max) {
       return (min <= value && max >= value);
     }
@@ -368,12 +380,11 @@ class OgreSlotMachine{
       clearInterval(reel.interval)
     }, stopTimer);
     return stopTimer;
-    // console.log(((timeout+((numberOfSymbols-winnerReel) * reel.timeout)) + ((numberOfSymbols+1) * reel.timeout) * rounds));
   }
   
   
 }
-// setInterval(() => osm.spin(), 1000)
+
 var osm = new OgreSlotMachine();
 
 (()=> {
@@ -427,10 +438,10 @@ var osm = new OgreSlotMachine();
 
 // Oher
 // ()Private Variables
-// ()Generate symbols 
+// (+)Generate symbols 
 // ()0 Credit cant play ( paid with Prompt )
 // ()Animate slot machine
-// ()Array of images as symbols ( NFT + Elon mask ?:D )
+// (+)Array of images as symbols ( NFT + Elon mask ?:D )
 // ()Loading screen
 // ()JS Documentation
 // ()Unit test
