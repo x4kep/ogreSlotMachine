@@ -15,5 +15,13 @@
   - () Eye candy (animations, sound effects etc.)
 
 # Documentation 
-  - How to use
-  - Things to improve
+  - Experiance with this project was fun i needed around 20h to complete it, biggest challange is organization of code.
+  - Things that should be improved on:
+    - Cleaner code
+    - Use some pre processor SCSS
+    - Use React
+
+# Guide how to run on localhost
+  - Fork project
+  - Open project in VS Studio Code
+  - Right click on index.html => Open With Live Server 
