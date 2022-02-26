@@ -123,7 +123,7 @@
 });
 
 class OgreSlotMachine{
-  constructor(credit = Default.Credit, reels = Default.Reels, symbols = Default.NumberOfSymbolsInReel){
+  constructor(credit = Default.Credit, reels = Default.Reels){
       this.credit = credit;
       this.reels = reels;
       this.reelsBucket = [];
@@ -146,9 +146,7 @@ class OgreSlotMachine{
    * @returns {number} Number is between min and max
    */
   random(min = 1, max = this.reelSymbols.length) {
-      var min = Math.ceil(min);
-      var max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1) + min);
+      return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min));
   }
 
    /**
@@ -162,11 +160,16 @@ class OgreSlotMachine{
       let winSum = 0;
       let self = this;
       let maxTimeout;
+      let audio;
 
       if(document.getElementsByClassName('slot__reel').length){
         let slotReel = document.querySelectorAll('.slot__reel');
         slotReel.forEach( slotReel => slotReel.remove() );
       }
+
+      audio = new Audio('./media/sounds/slot_spin.mp3');
+      audio.volume = Default.gameVol;
+      audio.play();
 
       function setBetValue(e, self) {
         let betValue = document.getElementById('js-betValue');
@@ -235,7 +238,6 @@ class OgreSlotMachine{
   }
 
   calculateCredit(value){
-    const note = document.querySelector('#slot__result');
     let paid = document.getElementById('js-paid');
     let total = document.getElementById('js-total');
 
@@ -243,9 +245,7 @@ class OgreSlotMachine{
     
     // REF: Avoid if statments
     if(value > 0) {
-      // console.log('WIN' + value);
-      // note.style.borderColor = '#38bb6f';
-      audio = new Audio('./media/sounds/Multicast_x4.mp3.mp3');
+      audio = new Audio('./media/sounds/slot_win.mp3');
       audio.volume = Default.gameVol;
       audio.play();
       this.credit += value;
@@ -253,9 +253,7 @@ class OgreSlotMachine{
       // Display how much user earned
       paid.value = value;
     } else {
-      // console.log('LOSE');
-      // note.style.borderColor = '#ee6052';
-      audio = new Audio('./media/sounds/spin.mp3');
+      audio = new Audio('./media/sounds/slot_lose.mp3');
       audio.volume = Default.gameVol;
       audio.play();
       this.credit -= this.betValue;

@@ -6,6 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
+.eslintrc.js
+package-lock.json
+package.json
 
 # Firebase cache
 .firebase/
