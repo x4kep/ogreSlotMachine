@@ -282,11 +282,13 @@ ______________________*/
     width: 74px;
     height: 74px;
   }
-
   .reel__symbol {
     width:  70px;
     height: 70px;
     line-height: 6.2;
+  }
+  .slot__header {
+    font-size: 36px;
   }
 }
 
@@ -311,6 +313,10 @@ ______________________*/
   .reel__symbol {
     width:  100px;
     height: 100px;
+  }
+  .slot__header {
+    font-size: 64px;
+    margin-bottom: 40px;
   }
 }
 
