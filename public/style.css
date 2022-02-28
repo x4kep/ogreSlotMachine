@@ -181,6 +181,7 @@ input[type='text']:disabled{
   text-align: center;
   font-weight: bold;
   font-size: 64px;
+  margin-bottom: 20px;
 }
 
 /* Buttons 
