@@ -7,12 +7,12 @@
 /**
  * @enum {String} SlotMachine defaults settings */
  const Default = Object.freeze({
-  Credit: 1000,
-  Reels: 3,
-  NumberOfSymbolsInReel: 11, // MAX 19 extend reelSymbols if you want more
-  MinBet: 1,
-  MaxBet: 20,
-  MixMatchSymbolsWin: 2,
+  credit: 1000,
+  reels: 3,
+  numberOfSymbolsInReel: 11, // MAX 19 extend reelSymbols if you want more
+  minBet: 1,
+  maxBet: 20,
+  mixMatchSymbolsWin: 2,
   musicVol: 0.4,
   gameVol: 0.1,
   autoSpinSpeed: 3000,
@@ -21,7 +21,7 @@
   reelSymbols: [
     {
       orderNumber: 0,
-      worth: 10,
+      worth: 6,
       imageUrl: './media/reelsSymbols/elon_mask.png'
     },
     {
@@ -123,11 +123,11 @@
 });
 
 class OgreSlotMachine{
-  constructor(credit = Default.Credit, reels = Default.Reels){
+  constructor(credit = Default.credit, reels = Default.reels){
       this.credit = credit;
       this.reels = reels;
       this.reelsBucket = [];
-      this.betValue = Default.MinBet;
+      this.betValue = Default.minBet;
       this.autoSpinInterval;
       this.autoSpinSpeed;
       this.populateReelsBuckets(reels);
@@ -173,21 +173,21 @@ class OgreSlotMachine{
 
       function setBetValue(e, self) {
         let betValue = document.getElementById('js-betValue');
-        let isBetOne = e.target.classList.contains('js-betOne') ? self.betValue = Default.MinBet : false;
-        let isbetMax = e.target.classList.contains('js-betMax') ? self.betValue = Default.MaxBet : false;
+        let isBetOne = e.target.classList.contains('js-betOne') ? self.betValue = Default.minBet : false;
+        let isbetMax = e.target.classList.contains('js-betMax') ? self.betValue = Default.maxBet : false;
         if(isBetOne) {
-          self.betValue = Default.MinBet;
-          betValue.value = Default.MinBet;
+          self.betValue = Default.minBet;
+          betValue.value = Default.minBet;
         } else if(isbetMax) {
-          self.betValue = Default.MaxBet;
-          betValue.value = Default.MaxBet;
+          self.betValue = Default.maxBet;
+          betValue.value = Default.maxBet;
         }
       }
 
       function resultReels(reelsBucket, self){
         let randomNum;
         reelsBucket.forEach(element => {
-          randomNum = element[self.random(0, Default.NumberOfSymbolsInReel)].orderNumber;
+          randomNum = element[self.random(0, Default.numberOfSymbolsInReel)].orderNumber;
           resultCombination.push(randomNum);
         });
       }
@@ -199,7 +199,7 @@ class OgreSlotMachine{
 
       function winReels(symbolCounts, self){
         for(const symbol in symbolCounts){
-          if(symbolCounts[symbol] >= Default.MixMatchSymbolsWin) {
+          if(symbolCounts[symbol] >= Default.mixMatchSymbolsWin) {
             return self.betValue * Math.floor(Math.pow(2, Default.reelSymbols[symbol].worth)) * (symbolCounts[symbol]);
           }
         }
@@ -208,7 +208,7 @@ class OgreSlotMachine{
       function displayReels(resultCombination, self) {
         resultCombination.forEach((reelResul) => {
           let addedReel = self.addReels(Default.reelSymbols);
-          let timeout = self.stopReels(addedReel, Number(reelResul), Default.reelsSpinRound, Default.NumberOfSymbolsInReel);
+          let timeout = self.stopReels(addedReel, Number(reelResul), Default.reelsSpinRound, Default.numberOfSymbolsInReel);
           maxTimeout = maxTimeout || timeout;
           if(maxTimeout <= timeout){ maxTimeout = timeout}
         });
@@ -297,10 +297,10 @@ class OgreSlotMachine{
       return (min <= value && max >= value);
     }
     
-    if(isInRange(betValue, Default.MinBet, Default.MaxBet)) {
+    if(isInRange(betValue, Default.minBet, Default.maxBet)) {
       this.betValue = betValue;
     } else {
-      e.target.value = Default.MinBet;
+      e.target.value = Default.minBet;
     }
 
   }
@@ -317,7 +317,7 @@ class OgreSlotMachine{
     blockContainer.classList.add("reel__window");
     blockRailway.classList.add("reel__railway");
   
-    for(let i = 0; i <= Default.NumberOfSymbolsInReel; i++){
+    for(let i = 0; i <= Default.numberOfSymbolsInReel; i++){
       block = document.createElement("div");
       block.classList.add("reel__symbol");
       block.innerHTML = i;
@@ -325,7 +325,7 @@ class OgreSlotMachine{
       blockRailway.appendChild(block);
   
       // Make clone of last element, and put it at start
-      if(i == Default.NumberOfSymbolsInReel){
+      if(i == Default.numberOfSymbolsInReel){
         cache = document.createElement("div");
         cache.classList.add("reel__symbol");
         cache.innerHTML = i;
@@ -344,7 +344,7 @@ class OgreSlotMachine{
     let reelSymbol = document.getElementsByClassName("reel__symbol");
     let blockMarginTop = parseInt(getComputedStyle(reelSymbol[0]).marginTop)
     let blockRealHeight = reelSymbol[0].clientHeight + blockMarginTop;
-    let blockTotalHeight = (Default.NumberOfSymbolsInReel * blockRealHeight + (blockRealHeight));
+    let blockTotalHeight = (Default.numberOfSymbolsInReel * blockRealHeight + (blockRealHeight));
     let intervalSpinReels;
     blockRailway.style.top = -blockTotalHeight + 'px';
   
@@ -386,9 +386,8 @@ class OgreSlotMachine{
 
 var osm = new OgreSlotMachine();
 
-(()=> {
-  // Init
-  // Event handlers ( REF: DRY )
+// Event handlers 
+window.onload = () => {
   let playMusic = document.getElementsByClassName('js-playMusic')[0];
   playMusic.addEventListener('click', (e) => { 
     e.preventDefault(); 
@@ -424,16 +423,17 @@ var osm = new OgreSlotMachine();
     e.preventDefault(); 
     osm.betMaxMinValueValidator(e);
   });
-  
-})()
 
+  let total = document.getElementById('js-total');
+  total.value = Default.credit;
 
+  let loader = document.getElementsByClassName('slot__skin--loader')[0];
+  setTimeout(() => {
+    loader.classList.remove("slot__skin--loader");
+  }, 1000)
 
-// IDEAS
-// (+)Buttons should have icons 
-// (+)Button Playmusic animated icon -- Toggle
-// (+)Button Autospin ( Spin infinite ) -- Toggle
-// (+)Button Spin animate icon ( Spin once )
+};
+
 
 // Oher
 // ()Private Variables
