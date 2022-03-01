@@ -5,9 +5,10 @@
 
 /* ===============  Variables =============== */
 :root {
-  --primary-color: red;
-  --secondary-color: green;
-  --accent-color: blue;
+  --primary-color: #de6161;
+  --secondary-color: #2657eb;
+  --secondary-light-color: #5359c9;
+  --white-color: #fff;
 
   --border-radius-small: 3;
   --border-radius-medium: 6;
@@ -17,10 +18,10 @@
 body {
   font-family: 'Redressed', cursive;
   font-size: 62.5%;
-  color: white;
-  background: #de6161; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #de6161, #2657eb); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: var(--white-color);
+  background: var(--primary-color); /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, var(--primary-color), var(--secondary-color)); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -73,7 +74,7 @@ input[type='text']:disabled{
   height: 600px;
   position: relative;
   border-radius: 15px;
-  border: 5px solid white;
+  border: 5px solid  var(--white-color);
   margin: 0 auto;
   
   background-image: url(./media/images/ogre.png);
@@ -119,7 +120,7 @@ input[type='text']:disabled{
 .slot__controls input {
   height: 50px;
   width: 50px;
-  border: 2px solid white;
+  border: 2px solid  var(--white-color);
   border-radius: 0 10px 10px 0;
   text-align: center;
   font: 20px;
@@ -161,14 +162,14 @@ input[type='text']:disabled{
   width: 33%;
   min-height: 130px;
   position: relative;
-  color: white;
-  border: 2px solid white;
+  color:  var(--white-color);
+  border: 2px solid  var(--white-color);
   border-radius: 10px;
   margin: 0 auto;
   text-align: center;
   line-height: 2;
   top: 150px;
-  background-color: #5359c9;
+  background-color: var(--secondary-light-color);
   opacity: 0.8;
   font-size: 32px;
 }
@@ -188,7 +189,7 @@ input[type='text']:disabled{
   Ref: https://codepen.io/davidicus/pen/emgQKJ 
 */
 .btn {
-  color: white;
+  color:  var(--white-color);
   cursor: pointer;
   display: inline-block;
   font-size:16px;
@@ -201,8 +202,8 @@ input[type='text']:disabled{
   text-transform: uppercase;
   width: 100%;
   text-align: center;
-  border: 1px dotted rgb(255, 255, 255);
-  background-color: #5359c9;
+  border: 1px dotted  var(--white-color);
+  background-color: var(--secondary-light-color);
   border: 1px solid;
 }
 
@@ -213,7 +214,7 @@ input[type='text']:disabled{
 
 .btn--borderFadeOut {
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-  outline: 1px solid rgb(255, 255, 255);;
+  outline: 1px solid  var(--white-color);
   outline-color: rgba(255, 255, 255, .5);
   outline-offset: 0px;
   text-shadow: none;
@@ -221,11 +222,11 @@ input[type='text']:disabled{
 } 
 
 .btn--borderFadeOut:hover {
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid var(--white-color);
   box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 15px;
-  text-shadow: 1px 1px 2px #427388; 
+  text-shadow: 1px 1px 2px var(--primary-color); 
 }
 
 #slot__reels > .slot__reel {
@@ -241,7 +242,7 @@ input[type='text']:disabled{
   height: 104px;
   width: 104px;
   overflow: hidden;
-  border: 2px solid rgb(255, 255, 255);
+  border: 2px solid var(--white-color);
 }
 
 .reel__railway {
@@ -251,11 +252,10 @@ input[type='text']:disabled{
 .reel__symbol {
   width: 100px;
   height: 100px;
-  background-color: #5359c9;
+  background-color: var(--primary-color);
   margin: 2px auto;
-  color: white;
+  color: var(--white-color);
   text-align: right;
-  line-height: 9.2;
   font-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
@@ -313,6 +313,7 @@ ______________________*/
   .reel__symbol {
     width:  100px;
     height: 100px;
+    line-height: 9.2;
   }
   .slot__header {
     font-size: 64px;
@@ -357,4 +358,4 @@ ______________________*/
 	}
 }
 
-@keyframes blinkBorder { 50% { border-color: #5359c9; }  }
+@keyframes blinkBorder { 50% { border-color: var(--primary-color); }  }

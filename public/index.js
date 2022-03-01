@@ -153,6 +153,7 @@ class OgreSlotMachine{
    * 
    * @param { event } event onClick
    * @returns { void } 
+   * @description All logic regarding of spin.
    */
   spin(event) {
       let resultCombination = [];
@@ -221,9 +222,15 @@ class OgreSlotMachine{
       setTimeout(() => this.calculateCredit(winSum), maxTimeout);
   }
 
+  /**
+   * 
+   * @param {Event} e 
+   * @returns {void}
+   * @description Auto spiner sets interval, to spin till user stops.
+   */
   autoSpin(e) {
     let btn = e.target;
-    // TODO Closure ?
+ 
     if(this.autoSpinInterval){
       clearInterval(this.autoSpinInterval);
       this.autoSpinInterval = undefined;
@@ -237,6 +244,12 @@ class OgreSlotMachine{
 
   }
 
+  /**
+   * 
+   * @param {number} value 
+   * @returns {void}
+   * @description Display result and play proper sound effect
+   */
   calculateCredit(value){
     let paid = document.getElementById('js-paid');
     let total = document.getElementById('js-total');
@@ -264,6 +277,11 @@ class OgreSlotMachine{
     
   }
 
+  /**
+   * 
+   * @param {Event} e 
+   * @returns {void}
+   */
   playMusic(e) {
     let btn = e.target;
     let body = document.getElementsByTagName('body')[0];
@@ -280,6 +298,11 @@ class OgreSlotMachine{
       body.classList.remove("body--horizontalBg");
       btn.classList.remove("js-playMusic--pause");
     }
+    
+    audio.onended = () => {
+      body.classList.remove("body--horizontalBg");
+      btn.classList.remove("js-playMusic--pause");
+    };
     
   }
 
@@ -305,6 +328,10 @@ class OgreSlotMachine{
 
   }
 
+    /**
+    * @param {Array[Object]} betValue 
+    * @description Create reels, that are configurable ( numberOfSymbolsInReel, reels )
+   */
   addReels(reelSymbols) {
     // create a new div element
     let slotReel = document.createElement("div");
@@ -357,6 +384,13 @@ class OgreSlotMachine{
     }
   }
 
+  /**
+   * 
+   * @param {number} blockTotalHeight 
+   * @param {object} railway 
+   * @param {number} speed 
+   * @description Move railway 
+   */
   spinReels(blockTotalHeight, railway, speed) {
     let position = -blockTotalHeight;
     
@@ -372,6 +406,14 @@ class OgreSlotMachine{
     }
   }
 
+  /**
+   * 
+   * @param {object} reel 
+   * @param {number} winnerReel 
+   * @param {number} rounds How many times should it spins full circle till it show result
+   * @param {*} numberOfSymbols 
+   * @returns 
+   */
   stopReels(reel, winnerReel, rounds, numberOfSymbols) {
     let timeout = winnerReel * (numberOfSymbols-1);
     let stopTimer = ((timeout+((numberOfSymbols-winnerReel) * reel.timeout)) + ((numberOfSymbols+1) * reel.timeout) * rounds);
@@ -384,9 +426,9 @@ class OgreSlotMachine{
   
 }
 
-var osm = new OgreSlotMachine();
-
-// Event handlers 
+/**
+ * @default Event Add event liseners for buttons  
+ */
 window.onload = () => {
   let playMusic = document.getElementsByClassName('js-playMusic')[0];
   playMusic.addEventListener('click', (e) => { 
@@ -434,15 +476,10 @@ window.onload = () => {
 
 };
 
+var osm = new OgreSlotMachine();
+
 
 // Oher
-// ()Private Variables
-// (+)Generate symbols 
-// ()0 Credit cant play ( paid with Prompt )
-// ()Animate slot machine
-// (+)Array of images as symbols ( NFT + Elon mask ?:D )
-// ()Loading screen
-// ()JS Documentation
 // ()Unit test
 
 // CSS clean up
