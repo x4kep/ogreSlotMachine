@@ -28,6 +28,7 @@
   - Right click on index.html => Open With Live Server 
 
 # Widget configuration 
+```
  const Default = Object.freeze({
   credit: 1000,                  // Initial credit that player start with
   reels: 3,                      // Number of reels 
@@ -57,6 +58,7 @@
     }...
   ]
 });
+```
 
 # Bug to fix
   - Disable spin  button when its spining
