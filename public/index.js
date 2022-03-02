@@ -479,19 +479,6 @@ window.onload = () => {
 var osm = new OgreSlotMachine();
 
 
-// Oher
-// ()Unit test
-
-// CSS clean up
-// ()BEM naming all elements 
-// ()Reusable colors at top
-// ()Spacing variables
-
-
-
-// document.body.onload = addElement(11);
-
-
 
 
 
